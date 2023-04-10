@@ -5,8 +5,9 @@ interface Factory<FT, N extends keyof FT> {
 }
 
 // The following two types are motivated by use of the "correlated union"
-// feature of TS, to allow the return type of FixtureMemo.make to be determined
-// by its `name` argument
+// feature of TS (https://github.com/Microsoft/TypeScript/issues/30581), to
+// allow the return type of FixtureMemo.make to be determined by its `name`
+// argument
 type FactoryWithName<FT, K extends keyof FT> = {
   [N in K]: {
     name: N
