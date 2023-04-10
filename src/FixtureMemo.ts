@@ -1,5 +1,3 @@
-import { AddCleanup, Cleanup } from "./Cleanups"
-
 interface Factory<FT, N extends keyof FT> {
   (f: FixtureMemo<FT>): FT[N]
 }
@@ -37,17 +35,17 @@ export class FixtureMemo<FT> {
   // the comments about their types above
   private correlatedFactories: FactoriesWithNameByName<FT>
   private factories: FixturesObject<FT>
-  private constructor(factories: FixturesObject<FT>, public addCleanup: AddCleanup) {
+  private constructor(factories: FixturesObject<FT>) {
     this.made = {}
     this.factories = factories
     this.correlatedFactories = Object.fromEntries(
       Object.entries(factories).map(([n, f]) => [n, { name: n, factory: f }])
     ) as FactoriesWithNameByName<FT>
   }
-  private static empty = new FixtureMemo<{}>({}, (_: Cleanup) => {});
+  private static empty = new FixtureMemo<{}>({});
   static from = FixtureMemo.empty.withFactories.bind(FixtureMemo.empty);
   withFactories<U>(factories: AddedFixturesObject<FT, U>): FixtureMemo<FT & U> {
-    return new FixtureMemo({ ...this.factories, ...factories }, this.addCleanup) as any;
+    return new FixtureMemo({ ...this.factories, ...factories }) as any;
   }
   make<N extends keyof FT>(name: N): FT[N] {
     if (name in this.made) {
@@ -64,7 +62,7 @@ export class FixtureMemo<FT> {
     return wrapWithProps(this)
   }
   partialCopy<N extends keyof FT>(names: N[]): FixtureMemo<FT> {
-    let f = new FixtureMemo(this.factories, this.addCleanup)
+    let f = new FixtureMemo(this.factories)
     names.forEach((name) => f.set(name, this.make(name)))
     return f
   }
