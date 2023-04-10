@@ -31,7 +31,9 @@ export class NotMade extends Error {}
 export class FixtureMemo<FT> {
   private made: MadeFixtures
   // correlatedFactories and factories are the same state.  correlatedFactories
-  // is a cache: see the comments about their types above
+  // is a cache whose purpose is only to make tsc infer the type of fixtures
+  // returned by method `make` (and the properties that call that method): see
+  // the comments about their types above
   private correlatedFactories: FactoriesWithNameByName<FT>
   private factories: FixturesObject<FT>
   private constructor(factories: FixturesObject<FT>, public addCleanup: AddCleanup) {
