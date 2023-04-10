@@ -1,6 +1,6 @@
 import { FixtureMemo } from "../src/FixtureMemo"
 
-describe("TypedFixt", () => {
+describe("FixtureMemo", () => {
   test("simple", () => {
     const f = FixtureMemo.from({foo: () => 123})
       .withFactories({
