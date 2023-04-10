@@ -1,12 +1,10 @@
 {
   "name": "ts-fixture-memo-experiment",
   "version": "0.0.1",
-  "description": "",
   "scripts": {
     "test": "jest"
   },
   "keywords": [],
-  "author": "",
   "license": "ISC",
   "devDependencies": {
     "@types/jest": "^29.5.0",
